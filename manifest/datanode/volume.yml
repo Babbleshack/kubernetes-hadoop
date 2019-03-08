@@ -1,0 +1,96 @@
+# persistent volume
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: datanode-pv
+  labels:
+    type: datanode
+    app: hadoop
+    hadoop: datanode
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes: [ "ReadWriteOnce" ]
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: local-storage
+  local:
+    path: /opt/hadoop/hdfs/datanode
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: component
+            operator: In
+            values:
+            - datanode
+---
+# persistent volume
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: datanode-pv-1
+  labels:
+    type: datanode
+    app: hadoop
+    hadoop: datanode
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes: [ "ReadWriteOnce" ]
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: local-storage
+  local:
+    path: /opt/hadoop/hdfs/datanode
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: component
+            operator: In
+            values:
+            - datanode
+---
+# persistent volume
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: datanode-pv-2
+  labels:
+    type: datanode
+    app: hadoop
+    hadoop: datanode
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes: [ "ReadWriteOnce" ]
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: local-storage
+  local:
+    path: /opt/hadoop/hdfs/datanode
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: component
+            operator: In
+            values:
+            - datanode
+---
+# persistent volume claim
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: datanode-pv-claim
+  labels: 
+    app: hadoop
+    hadoop: datanode
+spec:
+  volumeMode: Filesystem
+  accessModes: [ "ReadWriteOnce" ]
+  storageClassName: local-storage
+  resources:
+    requests:
+      storage: 5Gi

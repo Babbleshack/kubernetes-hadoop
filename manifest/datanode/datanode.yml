@@ -1,0 +1,64 @@
+---
+#datanode service
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-datanode-service
+  namespace: hadoop
+  labels:
+    app: hadoop
+    hadoop: datanode
+spec:
+  ports: #Hadoop port
+
+    - name: dn-rpc
+      port: 80
+      protocol: TCP
+    - name: dn-web
+      port: 50075
+---
+# stateful set
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hadoop-datanode
+  namespace: hadoop
+  labels:
+    app: hadoop
+    hadoop: datanode
+spec:
+  serviceName: hadoop-datanode-service
+  replicas: 3 
+  selector:
+    matchLabels:
+      hadoop: datanode
+  template:
+    metadata:
+      namespace: hadoop
+      labels:
+        app: hadoop
+        hadoop: datanode
+    spec:
+      containers:
+        - name: hadoop-datanode
+          image: babbleshack/hadoop:datanode
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: datanode-pv-claim 
+              mountPath: /opt/hadoop/hdfs/datanode
+          ports:
+            - name: dn-rpc
+              containerPort: 80
+          ports:
+            - name: dn-web
+              containerPort: 50075
+  volumeClaimTemplates:
+    - metadata:
+        name: datanode-pv-claim
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        storageClassName: local-storage
+        resources:
+          requests:
+            storage: 5Gi
