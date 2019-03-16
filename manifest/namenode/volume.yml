@@ -21,10 +21,10 @@ spec:
     required:
       nodeSelectorTerms:
         - matchExpressions:
-          - key: component
+          - key: hadoop
             operator: In
             values:
-            - namenode
+            - master
 ---
 # persistent volume claim
 kind: PersistentVolumeClaim

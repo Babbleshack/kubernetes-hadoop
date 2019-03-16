@@ -9,13 +9,16 @@ metadata:
     app: hadoop
     hadoop: datanode
 spec:
+  selector:
+    hadoop: datanode
   ports: #Hadoop port
-
     - name: dn-rpc
       port: 80
       protocol: TCP
     - name: dn-web
       port: 50075
+    - name: ssh
+      port: 22
 ---
 # stateful set
 apiVersion: apps/v1
@@ -28,7 +31,7 @@ metadata:
     hadoop: datanode
 spec:
   serviceName: hadoop-datanode-service
-  replicas: 3 
+  replicas: 1 
   selector:
     matchLabels:
       hadoop: datanode
@@ -41,7 +44,8 @@ spec:
     spec:
       containers:
         - name: hadoop-datanode
-          image: babbleshack/hadoop:datanode
+          #image: babbleshack/hadoop:datanode
+          image: babbleshack/hadoop:hadoop-worker
           imagePullPolicy: Always
           volumeMounts:
             - name: datanode-pv-claim 
@@ -49,9 +53,11 @@ spec:
           ports:
             - name: dn-rpc
               containerPort: 80
-          ports:
             - name: dn-web
               containerPort: 50075
+            - name: ssh
+              containerPort: 22
+
   volumeClaimTemplates:
     - metadata:
         name: datanode-pv-claim
