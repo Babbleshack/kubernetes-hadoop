@@ -29,6 +29,7 @@ metadata:
   labels:
     app: hadoop
     hadoop: datanode
+    hadoop: worker
 spec:
   serviceName: hadoop-datanode-service
   replicas: 1 
@@ -45,7 +46,7 @@ spec:
       containers:
         - name: hadoop-datanode
           #image: babbleshack/hadoop:datanode
-          image: babbleshack/hadoop:hadoop-worker
+          image: babbleshack/hadoop:worker
           imagePullPolicy: Always
           volumeMounts:
             - name: datanode-pv-claim 

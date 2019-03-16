@@ -1,3 +1,4 @@
+---
 #namenode service
 kind: Service
 apiVersion: v1
@@ -38,7 +39,6 @@ spec:
       protocol: TCP
       port: 8031
 ---
-# stateful set
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -64,11 +64,13 @@ spec:
       containers:
         - name: hadoop-namenode
           #image: babbleshack/hadoop:namenode
-          image: babbleshack/hadoop:hadoop-rm
+          image: babbleshack/hadoop:master
           imagePullPolicy: Always
           volumeMounts:
             - name: namenode-pv-claim 
               mountPath: /hadoop/data
+            - name: worker-configmap
+              mountPath: /opt/hadoop/etc/hadoop/slaves
           ports:
             - name: nn-web
               containerPort: 50070
@@ -89,6 +91,9 @@ spec:
           env:
             - name: CLUSTER_NAME
               value: hdfs-k8s
+          volumes:
+            - name: worker-configmap
+                name: hadoop-workers-configmap
   volumeClaimTemplates: #volume claim .spec.volumeClaimTemplate
     - metadata:
         name: namenode-pv-claim
