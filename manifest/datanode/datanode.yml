@@ -17,6 +17,8 @@ spec:
       protocol: TCP
     - name: dn-web
       port: 50075
+    - name: dn-web-ui
+      port: 8042
     - name: ssh
       port: 22
 ---
@@ -32,7 +34,7 @@ metadata:
     hadoop: worker
 spec:
   serviceName: hadoop-datanode-service
-  replicas: 1 
+  replicas: 2 
   selector:
     matchLabels:
       hadoop: datanode
@@ -48,24 +50,26 @@ spec:
           #image: babbleshack/hadoop:datanode
           image: babbleshack/hadoop:worker
           imagePullPolicy: Always
-          volumeMounts:
-            - name: datanode-pv-claim 
-              mountPath: /opt/hadoop/hdfs/datanode
+          #volumeMounts:
+          #  - name: datanode-pv-claim 
+          #    mountPath: /opt/hadoop/hdfs/datanode
           ports:
             - name: dn-rpc
               containerPort: 80
             - name: dn-web
               containerPort: 50075
+            - name: dn-web-ui
+              containerPort: 8042
             - name: ssh
               containerPort: 22
 
-  volumeClaimTemplates:
-    - metadata:
-        name: datanode-pv-claim
-      spec:
-        accessModes:
-        - ReadWriteOnce
-        storageClassName: local-storage
-        resources:
-          requests:
-            storage: 5Gi
+#volumeClaimTemplates:
+  #    - metadata:
+    #     name: datanode-pv-claim
+    # spec:
+      #   accessModes:
+        # - ReadWriteOnce
+        #storageClassName: local-storage
+        #resources:
+          # requests:
+            # storage: 5Gi
