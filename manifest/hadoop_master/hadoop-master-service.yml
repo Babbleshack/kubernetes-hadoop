@@ -1,16 +1,16 @@
 ---
-#namenode service
+#hadoop (yarn/hdfs) master service
 kind: Service
 apiVersion: v1
 metadata:
-  name: hadoop-namenode-service
+  name: hadoop-master-service
   namespace: hadoop
   labels:
     app: hadoop
-    hadoop: namenode
+    hadoop: master
 spec:
   selector:
-    hadoop: namenode
+    hadoop: master
   ports: #Hadoop port http://fibrevillage.com/storage/637-hadoop-default-ports-reference
     - name: nn-rpc
       protocol: TCP
@@ -38,15 +38,10 @@ spec:
     - name: rt
       protocol: TCP
       port: 8031
-    - name: nm-proxy
-      protocol: TCP
-      port: 8042
-    - name: rm-logs
-      protocol: TCP
-      port: 8188
     - name: job-his-ui
       protocol: TCP
       port: 19888
     - name: job-his-rpc
       protocol: TCP
-      port: 10033
+      port: 10020
+
