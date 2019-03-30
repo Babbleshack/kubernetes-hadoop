@@ -28,9 +28,6 @@ spec:
           imagePullPolicy: Always
           command: [ "/bin/bash" ]
           args: [ "/opt/init_container.d/start_master.sh" ]
-          volumeMounts:
-            - name: master-pv-claim 
-              mountPath: /hadoop/data
           ports:
             - name: nn-web
               containerPort: 50070
@@ -55,13 +52,3 @@ spec:
           env:
             - name: CLUSTER_NAME
               value: hdfs-k8s
-  volumeClaimTemplates: #volume claim .spec.volumeClaimTemplate
-    - metadata:
-        name: master-pv-claim
-      spec:
-        accessModes:
-        - ReadWriteOnce
-        storageClassName: local-storage
-        resources:
-          requests:
-            storage: 5Gi
