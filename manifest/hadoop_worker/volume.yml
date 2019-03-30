@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: datanode-pv
+  name: worker-pv
   labels:
-    type: datanode
+    type: worker
     app: hadoop
-    hadoop: datanode
+    hadoop: worker
 spec:
   capacity:
     storage: 5Gi
@@ -15,7 +15,7 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: local-storage
   local:
-    path: /opt/hadoop/hdfs/datanode
+    path: /opt/hadoop/hdfs/worker
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -29,11 +29,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: datanode-pv-1
+  name: worker-pv-1
   labels:
-    type: datanode
+    type: worker
     app: hadoop
-    hadoop: datanode
+    hadoop: worker
 spec:
   capacity:
     storage: 5Gi
@@ -42,7 +42,7 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: local-storage
   local:
-    path: /opt/hadoop/hdfs/datanode
+    path: /opt/hadoop/hdfs/worker
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -50,17 +50,17 @@ spec:
           - key: component
             operator: In
             values:
-            - datanode
+            - worker
 ---
 # persistent volume
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: datanode-pv-2
+  name: worker-pv-2
   labels:
-    type: datanode
+    type: worker
     app: hadoop
-    hadoop: datanode
+    hadoop: worker
 spec:
   capacity:
     storage: 5Gi
@@ -69,7 +69,7 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: local-storage
   local:
-    path: /opt/hadoop/hdfs/datanode
+    path: /opt/hadoop/hdfs/worker
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -77,17 +77,17 @@ spec:
           - key: component
             operator: In
             values:
-            - datanode
+            - worker
 ---
 # persistent volume
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: datanode-pv-3
+  name: worker-pv-3
   labels:
-    type: datanode
+    type: worker
     app: hadoop
-    hadoop: datanode
+    hadoop: worker
 spec:
   capacity:
     storage: 5Gi
@@ -96,7 +96,7 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: local-storage
   local:
-    path: /opt/hadoop/hdfs/datanode
+    path: /opt/hadoop/hdfs/worker
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -104,17 +104,17 @@ spec:
           - key: component
             operator: In
             values:
-            - datanode
+            - worker
 ---
 # persistent volume
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: datanode-pv-4
+  name: worker-pv-4
   labels:
-    type: datanode
+    type: worker
     app: hadoop
-    hadoop: datanode
+    hadoop: worker
 spec:
   capacity:
     storage: 5Gi
@@ -123,7 +123,7 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: local-storage
   local:
-    path: /opt/hadoop/hdfs/datanode
+    path: /opt/hadoop/hdfs/worker
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -131,16 +131,16 @@ spec:
           - key: component
             operator: In
             values:
-            - datanode
+            - worker
 ---
 # persistent volume claim
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: datanode-pv-claim
+  name: worker-pv-claim
   labels: 
     app: hadoop
-    hadoop: datanode
+    hadoop: worker
 spec:
   volumeMode: Filesystem
   accessModes: [ "ReadWriteOnce" ]
