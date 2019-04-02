@@ -32,12 +32,12 @@ spec:
           args: [ "/opt/init_container.d/start_hdfs.sh" ]
 
           ports:
-            - name: nn
-              containerPort: 8020
             - name: nn-rpc
               containerPort: 9000
             - name: nn-web
               containerPort: 50070
+            - name: s-nn
+              containerPort: 50090
           env:
             - name: CLUSTER_NAME
               value: hdfs-k8s

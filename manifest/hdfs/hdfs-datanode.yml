@@ -30,11 +30,11 @@ spec:
           command: [ "/bin/bash" ]
           args: [ "/opt/init_container.d/start_datanode.sh" ]
           ports:
-            - name: dn-rpc
-              containerPort: 80
+            - name: dn
+              containerPort: 50010
+            - name: dn-2
+              containerPort: 50020
             - name: dn-web
               containerPort: 50075
-            - name: dn-web-ui
-              containerPort: 8042
             - name: ssh
               containerPort: 22

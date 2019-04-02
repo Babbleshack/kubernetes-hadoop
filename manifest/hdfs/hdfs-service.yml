@@ -7,7 +7,6 @@ metadata:
   namespace: hdfs
   labels:
     app: hdfs
-    hdfs: master
 spec:
   selector:
     app: hdfs
@@ -15,9 +14,21 @@ spec:
     - name: nn
       protocol: TCP
       port: 8020
+    - name: dn-web
+      protocol: TCP
+      port: 8042
     - name: nn-rpc
       protocol: TCP
       port: 9000
+    - name: dn
+      protocol: TCP
+      port: 50010
+    - name: dn-2
+      protocol: TCP
+      port: 50020
     - name: nn-web #expose web interface on port 80 (9870->80)
       protocol: TCP
       port: 50070
+    - name: s-nn
+      protocol: TCP
+      port: 50090
