@@ -10,7 +10,7 @@ metadata:
     hdfs: master
 spec:
   selector:
-    hdfs: master
+    app: hdfs
   ports: #Hadoop port http://fibrevillage.com/storage/637-hadoop-default-ports-reference
     - name: nn
       protocol: TCP

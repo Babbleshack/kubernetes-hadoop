@@ -1,0 +1,40 @@
+---
+# stateful set
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hdfs-datanode
+  namespace: hdfs
+  labels:
+    app: hdfs
+    hdfs: datanode
+spec:
+  serviceName: hdfs-service
+  replicas: 37
+  selector:
+    matchLabels:
+      hdfs: datanode
+  template:
+    metadata:
+      namespace: hdfs
+      labels:
+        app: hdfs
+        hdfs: datanode
+    spec:
+      nodeSelector:
+        hdfs: datanode
+      containers:
+        - name: hdfs-datanode
+          image: babbleshack/hdfs:base
+          imagePullPolicy: Always
+          command: [ "/bin/bash" ]
+          args: [ "/opt/init_container.d/start_datanode.sh" ]
+          ports:
+            - name: dn-rpc
+              containerPort: 80
+            - name: dn-web
+              containerPort: 50075
+            - name: dn-web-ui
+              containerPort: 8042
+            - name: ssh
+              containerPort: 22

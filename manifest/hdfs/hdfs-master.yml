@@ -8,7 +8,7 @@ metadata:
     app: hdfs
     hdfs: master
 spec:
-  serviceName: hdfs-master-service
+  serviceName: hdfs-service
   replicas: 1 
   selector:
     matchLabels:
@@ -20,14 +20,17 @@ spec:
         app: hdfs
         hdfs: master
     spec:
-      hostname: hdfs-master-service
+      hostname: hdfs-master-0
+      nodeSelector:
+        hdfs: master
       containers:
         - name: hdfs-master
           #image: babbleshack/hdfs:master
           image: babbleshack/hdfs:base
           imagePullPolicy: Always
           command: [ "/bin/bash" ]
-          args: [ "/opt/init_container.d/start_master.sh" ]
+          args: [ "/opt/init_container.d/start_hdfs.sh" ]
+
           ports:
             - name: nn
               containerPort: 8020
