@@ -26,7 +26,7 @@ spec:
       containers:
         - name: hdfs-master
           #image: babbleshack/hdfs:master
-          image: babbleshack/hdfs:base
+          image: babbleshack/hadoop:base
           imagePullPolicy: Always
           command: [ "/bin/bash" ]
           args: [ "/opt/init_container.d/start_hdfs.sh" ]
