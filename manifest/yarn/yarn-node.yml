@@ -1,0 +1,40 @@
+---
+# stateful set
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: yarn-worker
+  namespace: yarn
+  labels:
+    app: yarn
+    yarn: worker
+spec:
+  serviceName: yarn-service
+  replicas: 37
+  selector:
+    matchLabels:
+      yarn: worker
+  template:
+    metadata:
+      namespace: hdfs
+      labels:
+        app: yarn
+        yarn: worker
+    spec:
+      nodeSelector:
+        yarn: worker
+      containers:
+        - name: yarn-worker
+          image: babbleshack/hadoop:base
+          imagePullPolicy: Always
+          command: [ "/bin/bash" ]
+          args: [ "/opt/init_container.d/start_yarn_worker.sh" ]
+          ports:
+            - name: nm
+              containerPort: 8040
+            - name: nm-2
+              containerPort: 8042
+            - name: nm-3
+              containerPort: 13562
+            - name: ssh
+              containerPort: 22
