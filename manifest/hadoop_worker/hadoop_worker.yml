@@ -34,7 +34,7 @@ metadata:
     hadoop: worker
 spec:
   serviceName: hadoop-worker-service
-  replicas: 2 
+  replicas: 30 
   selector:
     matchLabels:
       hadoop: worker
