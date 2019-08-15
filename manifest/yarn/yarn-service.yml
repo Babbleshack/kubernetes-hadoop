@@ -29,21 +29,27 @@ spec:
     - name: nm-2
       protocol: TCP
       port: 8042
+    - name: amrmproxy
+      protocol: TCP
+      port: 8049
     - name: rm-admin-http
       protocol: TCP
       port: 8088
+    - name: tl-server
+      protocol: TCP
+      port: 8188
     - name: job-his-rpc
       protocol: TCP
       port: 10020
     - name: job-his
       protocol: TCP
       port: 10033
-    - name: nm-3
-      protocol: TCP
-      port: 13562
     - name: job-his-ui
       protocol: TCP
       port: 19888
+    - name: sp-port
+      protocol: TCP
+      port: 13562
 ---
 kind: Service
 apiVersion: v1
@@ -90,3 +96,12 @@ spec:
     - name: job-his-ui
       protocol: TCP
       port: 19888
+    - name: amrmproxy
+      protocol: TCP
+      port: 8049
+    - name: tl-server
+      protocol: TCP
+      port: 8188
+    - name: sp-port
+      protocol: TCP
+      port: 13562

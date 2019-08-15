@@ -50,7 +50,7 @@ spec:
           image: babbleshack/hadoop:base
           imagePullPolicy: Always
           command: [ "/bin/bash" ]
-          args: [ "/opt/init_container.d/start_worker.sh" ]
+          args: [ "/opt/init_container.d/start_nodemanager.sh" ]
           ports:
             - name: dn-rpc
               containerPort: 80

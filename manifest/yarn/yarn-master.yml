@@ -20,15 +20,22 @@ spec:
         app: yarn
         yarn: master
     spec:
-      hostname: yarn-master-0
+      hostname: yarn-master-0.yarn-service
       nodeSelector:
         yarn: master
+      volumes:
+        - name: worker-nodes-config
+          configMap:
+            name: yarn-workers-configmap
       containers:
         - name: yarn-master
-          image: babbleshack/hadoop:base
+          image: babbleshack/hadoop:distributed
           imagePullPolicy: Always
           command: [ "/bin/bash" ]
           args: [ "/opt/init_container.d/start_yarn.sh" ]
+          volumeMounts:
+            - name: worker-nodes-config
+              mountPath: /opt/hadoop-kuber-conf
           ports:
             - name: rm-sched
               containerPort: 8030
@@ -38,6 +45,8 @@ spec:
               containerPort: 8032
             - name: rm-admin
               containerPort: 8033
+            - name: rmam-proxy
+              containerPort: 8049
             - name: rm-admin-http
               containerPort: 8088
             - name: job-his-rpc
@@ -46,4 +55,9 @@ spec:
               containerPort: 10033
             - name: job-his-ui
               containerPort: 19888
-
+            - name: webapp
+              containerPort: 8088
+            - name: timeline-serv
+              containerPort: 8188
+            - name: timeline-rpc
+              containerPort: 10200

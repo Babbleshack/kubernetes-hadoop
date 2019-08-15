@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: resource
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: resource-service
+  namespace: resource
+  labels:
+    app: resource
+    resource: cpu
+spec:
+  selector:
+    app: resource
+  ports:
+    - name: rm-sched
+      protocol: TCP
+      port: 8030
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: resource
+  namespace: resource
+  labels:
+    app: resource
+    resource: cpu
+spec:
+  selector:
+    matchLabels:
+      app: resource
+  serviceName: resource-service
+  replicas: 37
+  template: #pod template .spec.template
+    metadata:
+      namespace: resource
+      labels:
+        app: resource
+        resource: cpu
+    spec:
+      nodeSelector:
+        yarn: worker
+      containers:
+        - name: resource-cpu
+          image: babbleshack/resource:cpu
+          imagePullPolicy: Always
+          resources:
+            limits:
+              # 1000mcpu * 8 threads
+              # 80% - 6400
+              cpu: 6400m 

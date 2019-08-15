@@ -10,7 +10,7 @@ metadata:
     hdfs: datanode
 spec:
   serviceName: hdfs-service
-  replicas: 37
+  replicas: 64
   selector:
     matchLabels:
       hdfs: datanode
@@ -22,7 +22,7 @@ spec:
         hdfs: datanode
     spec:
       nodeSelector:
-        hdfs: datanode
+        hdfs: worker
       containers:
         - name: hdfs-datanode
           image: babbleshack/hadoop:base
