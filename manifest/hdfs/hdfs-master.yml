@@ -21,6 +21,17 @@ spec:
         hdfs: master
     spec:
       hostname: hdfs-master-0
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - hdfs
+              topologyKey: "kubernetes.io/hostname"
       nodeSelector:
         hdfs: master
       containers:

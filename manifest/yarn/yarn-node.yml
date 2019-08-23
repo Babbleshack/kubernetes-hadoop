@@ -10,7 +10,7 @@ metadata:
     yarn: worker
 spec:
   serviceName: yarn-service
-  replicas: 64
+  replicas: 60
   selector:
     matchLabels:
       yarn: worker
@@ -21,6 +21,17 @@ spec:
         app: yarn
         yarn: worker
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - yarn
+              topologyKey: "kubernetes.io/hostname"
       nodeSelector:
         yarn: worker
       containers:

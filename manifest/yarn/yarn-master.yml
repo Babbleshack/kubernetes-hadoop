@@ -21,6 +21,17 @@ spec:
         yarn: master
     spec:
       hostname: yarn-master-0.yarn-service
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - yarn
+              topologyKey: "kubernetes.io/hostname"
       nodeSelector:
         yarn: master
       volumes:

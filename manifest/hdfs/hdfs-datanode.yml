@@ -10,7 +10,7 @@ metadata:
     hdfs: datanode
 spec:
   serviceName: hdfs-service
-  replicas: 64
+  replicas: 60
   selector:
     matchLabels:
       hdfs: datanode
@@ -21,6 +21,17 @@ spec:
         app: hdfs
         hdfs: datanode
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - hdfs
+              topologyKey: "kubernetes.io/hostname"
       nodeSelector:
         hdfs: worker
       containers:
